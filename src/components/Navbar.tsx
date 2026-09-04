@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { ShoppingCart, Search, MapPin, Heart, User, Menu, Moon, Sun, X } from 'lucide-react';
+import { ShoppingCart, Search, MapPin, Heart, User, Moon, Sun, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useCartStore } from '../store/cartStore';
 import { useThemeStore } from '../store/themeStore';
