@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { ShoppingCart, Search, MapPin, Heart, User, Menu, Moon, Sun } from 'lucide-react';
+import { ShoppingCart, Search, MapPin, Heart, User, Menu, Moon, Sun, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useCartStore } from '../store/cartStore';
 import { useThemeStore } from '../store/themeStore';
@@ -18,6 +18,7 @@ const Navbar = ({ onCartClick }: NavbarProps) => {
 
   const [searchTerm, setSearchTerm] = useState('');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const debouncedSearch = useDebounce(searchTerm, 300);
   const searchRef = useRef<HTMLDivElement>(null);
 
@@ -162,32 +163,88 @@ const Navbar = ({ onCartClick }: NavbarProps) => {
 
      
       <header className="bg-primary dark:bg-slate-950 text-white shadow-md sticky top-0 z-40 lg:hidden transition-all duration-300">
-        <div className={`cmpad flex items-center justify-between transition-all duration-300 ${isScrolled ? 'h-12' : 'h-16'}`}>
-          <div className="flex items-center gap-3">
-            <button className="p-1 hover:bg-primary-hover rounded-md transition-colors">
-              <Menu size={24} />
-            </button>
-            <Link to="/" className="flex items-center h-10">
-              <img src="/logo-light.svg" alt="Tirur Hypermarket" className="h-full w-auto rounded object-contain" />
-            </Link>
-          </div>
-          
-          <div className="flex items-center gap-4">
-            <button onClick={toggleTheme} className="p-1">
-              {isDark ? <Sun size={22} /> : <Moon size={22} />}
-            </button>
-            <button className="p-1">
-              <Search size={22} />
-            </button>
-            <button onClick={onCartClick} className="relative p-1">
-              <ShoppingCart size={22} />
-              {itemCount > 0 && (
-                <span className="absolute -top-1 -right-1 flex items-center justify-center w-4 h-4 bg-white text-primary text-[10px] font-bold rounded-full">
-                  {itemCount}
-                </span>
+        <div className={`cmpad flex flex-col justify-center transition-all duration-300 ${isScrolled && !isMobileSearchOpen ? 'h-12' : isMobileSearchOpen ? 'h-auto py-3' : 'h-16'}`}>
+          {!isMobileSearchOpen ? (
+            <div className="flex items-center justify-between w-full h-full">
+              <div className="flex items-center gap-3">
+                <Link to="/" className="flex items-center h-10">
+                  <img src="/logo-light.svg" alt="Tirur Hypermarket" className="h-full w-auto rounded object-contain" />
+                </Link>
+              </div>
+              
+              <div className="flex items-center gap-4">
+                <button onClick={toggleTheme} className="p-1">
+                  {isDark ? <Sun size={22} /> : <Moon size={22} />}
+                </button>
+                <button onClick={() => setIsMobileSearchOpen(true)} className="p-1">
+                  <Search size={22} />
+                </button>
+                <button onClick={onCartClick} className="relative p-1">
+                  <ShoppingCart size={22} />
+                  {itemCount > 0 && (
+                    <span className="absolute -top-1 -right-1 flex items-center justify-center w-4 h-4 bg-white text-primary text-[10px] font-bold rounded-full">
+                      {itemCount}
+                    </span>
+                  )}
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="flex flex-col w-full relative" ref={searchRef}>
+              <div className="flex items-center gap-2 w-full bg-white dark:bg-slate-800 rounded-lg h-11 px-2">
+                <Search size={20} className="text-slate-400" />
+                <input 
+                  type="text" 
+                  placeholder="Search Products..." 
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onFocus={() => setIsSearchFocused(true)}
+                  autoFocus
+                  className="flex-1 py-2 text-slate-900 dark:text-slate-100 focus:outline-none bg-transparent placeholder-primary/60 dark:placeholder-primary/60 text-sm"
+                />
+                <button 
+                  onClick={() => {
+                    setIsMobileSearchOpen(false);
+                    setSearchTerm('');
+                  }} 
+                  className="p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              {isSearchFocused && debouncedSearch.trim() && (
+                <div className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-y-auto max-h-[70vh] z-50 p-4">
+                  <h3 className="text-slate-500 dark:text-slate-400 font-semibold mb-3 px-1 text-sm">Results</h3>
+                  {isSearchLoading ? (
+                    <div className="p-4 text-center text-slate-500 dark:text-slate-400 text-sm">Loading...</div>
+                  ) : searchResults?.products && searchResults.products.length > 0 ? (
+                    <div className="grid grid-cols-1 gap-3">
+                      {searchResults.products.map((product) => (
+                        <Link 
+                          key={product.id} 
+                          to={`/product/${product.id}`}
+                          onClick={() => {
+                            setIsSearchFocused(false);
+                            setIsMobileSearchOpen(false);
+                            setSearchTerm('');
+                          }}
+                          className="flex items-center gap-3 p-2 rounded-lg border border-slate-100 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors"
+                        >
+                          <div className="w-10 h-10 bg-white rounded flex items-center justify-center overflow-hidden flex-shrink-0">
+                            <img src={product.thumbnail} alt={product.title} className="w-full h-full object-contain mix-blend-multiply" />
+                          </div>
+                          <span className="text-sm font-medium text-slate-700 dark:text-slate-200 line-clamp-2">{product.title}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="p-4 text-center text-slate-500 dark:text-slate-400 text-sm">No products found for "{debouncedSearch}"</div>
+                  )}
+                </div>
               )}
-            </button>
-          </div>
+            </div>
+          )}
         </div>
       </header>
     </>

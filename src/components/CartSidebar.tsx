@@ -27,7 +27,7 @@ const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
   return (
     <>
       <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 transition-opacity" onClick={onClose} />
-      <div className="fixed inset-y-0 right-0 w-full max-w-md bg-white dark:bg-slate-900 shadow-2xl z-50 flex flex-col animate-in slide-in-from-right duration-300 border-l border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white transition-colors">
+      <div className="fixed inset-0 sm:inset-y-0 sm:left-auto sm:right-0 w-full sm:max-w-md bg-white dark:bg-slate-900 shadow-2xl z-50 flex flex-col animate-in slide-in-from-right duration-300 border-l border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white transition-colors">
         <div className="flex items-center justify-between p-4 border-b border-slate-200 dark:border-slate-800">
           <h2 className="text-xl font-semibold">Your Cart</h2>
           <button onClick={onClose} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors text-slate-500 dark:text-slate-400">
@@ -84,7 +84,7 @@ const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
         </div>
 
         {items.length > 0 && (
-          <div className="border-t border-slate-200 dark:border-slate-800 p-4 bg-slate-50 dark:bg-slate-800/80 space-y-4">
+          <div className="border-t border-slate-200 dark:border-slate-800 p-4 pb-24 sm:pb-4 bg-slate-50 dark:bg-slate-800/80 space-y-4">
             <div className="space-y-2 text-sm text-slate-600 dark:text-slate-400">
               <div className="flex justify-between">
                 <span>Subtotal</span>
