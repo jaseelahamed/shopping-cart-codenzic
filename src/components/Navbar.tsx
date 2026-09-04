@@ -78,7 +78,7 @@ const Navbar = ({ onCartClick }: NavbarProps) => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               onFocus={() => setIsSearchFocused(true)}
-              className="flex-1 px-4 py-2 text-slate-900 dark:text-slate-100 focus:outline-none bg-transparent placeholder-slate-400 dark:placeholder-slate-500"
+              className="flex-1 px-4 py-2 text-slate-900 dark:text-slate-100 focus:outline-none bg-transparent placeholder-primary/60 dark:placeholder-primary/60"
             />
             <button className="px-4 text-slate-400 hover:text-primary dark:hover:text-primary transition-colors">
               <Search size={20} />

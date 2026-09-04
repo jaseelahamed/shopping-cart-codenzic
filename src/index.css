@@ -16,6 +16,9 @@ body {
   a, button, [role="button"], label, select, input[type="submit"], input[type="button"] {
     @apply cursor-pointer;
   }
+  ::placeholder {
+    @apply text-primary/60 dark:text-primary/60;
+  }
 }
 
 @media (min-width: 1366px) {

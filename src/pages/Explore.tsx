@@ -91,7 +91,7 @@ const Explore = () => {
         </div>
 
         {filteredProducts.length === 0 ? (
-          <div className="bg-white rounded-2xl border border-slate-100 p-12 text-center shadow-sm">
+          <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 p-12 text-center shadow-sm">
             <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-400">
               <Search size={32} />
             </div>

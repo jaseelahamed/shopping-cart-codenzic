@@ -21,7 +21,7 @@ const Checkout = () => {
         <ShoppingBag className="w-16 h-16 text-slate-300 dark:text-slate-600 mb-4" />
         <h2 className="text-2xl font-bold mb-2">Your cart doesn't meet checkout requirements</h2>
         <p className="text-slate-500 dark:text-slate-400 mb-6">Minimum checkout value is ₹800.00</p>
-        <Link to="/" className="px-6 py-2 bg-[#aa3bff] text-white rounded-xl hover:bg-[#902be6] transition-colors">
+        <Link to="/" className="px-6 py-2 bg-primary text-white rounded-xl hover:bg-primary-hover transition-colors">
           Return to Shop
         </Link>
       </div>
@@ -51,10 +51,10 @@ const Checkout = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 overflow-hidden transition-colors duration-300 text-slate-900 dark:text-slate-100">
-      {/* Stepper */}
+    <div className=" bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 overflow-hidden transition-colors duration-300 text-slate-900 dark:text-slate-100">
+ 
       <div className="bg-slate-50 dark:bg-slate-800 p-6 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center relative transition-colors duration-300">
-        <div className="absolute top-1/2 left-12 right-12 h-0.5 bg-slate-200 dark:bg-slate-700 -z-0 -translate-y-1/2"></div>
+        <div className="absolute top-11 left-12 right-12 h-0.5 bg-slate-200 dark:bg-slate-700 -z-0 -translate-y-1/2"></div>
         
         {[
           { num: 1, label: 'Cart Review', icon: ShoppingBag },
@@ -63,7 +63,7 @@ const Checkout = () => {
         ].map((s) => (
           <div key={s.num} className="relative z-10 flex flex-col items-center">
             <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold mb-2 transition-colors ${
-              step >= s.num ? 'bg-[#aa3bff] text-white ring-4 ring-white dark:ring-slate-800' : 'bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-400 ring-4 ring-white dark:ring-slate-800'
+              step >= s.num ? 'bg-primary text-white ring-4 ring-white dark:ring-slate-800' : 'bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-400 ring-4 ring-white dark:ring-slate-800'
             }`}>
               {step > s.num ? <Check size={18} /> : s.num}
             </div>
@@ -101,7 +101,7 @@ const Checkout = () => {
               </Link>
               <button
                 onClick={() => setStep(2)}
-                className="px-8 py-3 bg-[#aa3bff] text-white font-medium rounded-xl hover:bg-[#902be6] transition-colors"
+                className="px-8 py-3 bg-primary text-white font-medium rounded-xl hover:bg-primary-hover transition-colors"
               >
                 Continue to Shipping
               </button>
@@ -122,7 +122,7 @@ const Checkout = () => {
                     value={formik.values.fullName}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    className={`w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 border ${formik.touched.fullName && formik.errors.fullName ? 'border-red-500 focus:ring-red-500' : 'border-slate-200 dark:border-slate-700 focus:ring-[#aa3bff]'} rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-shadow`}
+                    className={`w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 border ${formik.touched.fullName && formik.errors.fullName ? 'border-red-500 focus:ring-red-500' : 'border-slate-200 dark:border-slate-700 focus:ring-primary'} rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-shadow`}
                   />
                   {formik.touched.fullName && formik.errors.fullName && <p className="text-red-500 text-xs mt-1">{formik.errors.fullName}</p>}
                 </div>
@@ -135,7 +135,7 @@ const Checkout = () => {
                     value={formik.values.email}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    className={`w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 border ${formik.touched.email && formik.errors.email ? 'border-red-500 focus:ring-red-500' : 'border-slate-200 dark:border-slate-700 focus:ring-[#aa3bff]'} rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-shadow`}
+                    className={`w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 border ${formik.touched.email && formik.errors.email ? 'border-red-500 focus:ring-red-500' : 'border-slate-200 dark:border-slate-700 focus:ring-primary'} rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-shadow`}
                   />
                   {formik.touched.email && formik.errors.email && <p className="text-red-500 text-xs mt-1">{formik.errors.email}</p>}
                 </div>
@@ -148,7 +148,7 @@ const Checkout = () => {
                     value={formik.values.phoneNumber}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    className={`w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 border ${formik.touched.phoneNumber && formik.errors.phoneNumber ? 'border-red-500 focus:ring-red-500' : 'border-slate-200 dark:border-slate-700 focus:ring-[#aa3bff]'} rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-shadow`}
+                    className={`w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 border ${formik.touched.phoneNumber && formik.errors.phoneNumber ? 'border-red-500 focus:ring-red-500' : 'border-slate-200 dark:border-slate-700 focus:ring-primary'} rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-shadow`}
                   />
                   {formik.touched.phoneNumber && formik.errors.phoneNumber && <p className="text-red-500 text-xs mt-1">{formik.errors.phoneNumber}</p>}
                 </div>
@@ -161,7 +161,7 @@ const Checkout = () => {
                     value={formik.values.city}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    className={`w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 border ${formik.touched.city && formik.errors.city ? 'border-red-500 focus:ring-red-500' : 'border-slate-200 dark:border-slate-700 focus:ring-[#aa3bff]'} rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-shadow`}
+                    className={`w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 border ${formik.touched.city && formik.errors.city ? 'border-red-500 focus:ring-red-500' : 'border-slate-200 dark:border-slate-700 focus:ring-primary'} rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-shadow`}
                   />
                   {formik.touched.city && formik.errors.city && <p className="text-red-500 text-xs mt-1">{formik.errors.city}</p>}
                 </div>
@@ -175,7 +175,7 @@ const Checkout = () => {
                   value={formik.values.address}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  className={`w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 border ${formik.touched.address && formik.errors.address ? 'border-red-500 focus:ring-red-500' : 'border-slate-200 dark:border-slate-700 focus:ring-[#aa3bff]'} rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-shadow`}
+                  className={`w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 border ${formik.touched.address && formik.errors.address ? 'border-red-500 focus:ring-red-500' : 'border-slate-200 dark:border-slate-700 focus:ring-primary'} rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-shadow`}
                 />
                 {formik.touched.address && formik.errors.address && <p className="text-red-500 text-xs mt-1">{formik.errors.address}</p>}
               </div>
@@ -188,7 +188,7 @@ const Checkout = () => {
                   value={formik.values.postalCode}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  className={`w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 border ${formik.touched.postalCode && formik.errors.postalCode ? 'border-red-500 focus:ring-red-500' : 'border-slate-200 dark:border-slate-700 focus:ring-[#aa3bff]'} rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-shadow`}
+                  className={`w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 border ${formik.touched.postalCode && formik.errors.postalCode ? 'border-red-500 focus:ring-red-500' : 'border-slate-200 dark:border-slate-700 focus:ring-primary'} rounded-xl focus:outline-none focus:ring-2 focus:border-transparent transition-shadow`}
                 />
                 {formik.touched.postalCode && formik.errors.postalCode && <p className="text-red-500 text-xs mt-1">{formik.errors.postalCode}</p>}
               </div>
@@ -203,7 +203,7 @@ const Checkout = () => {
                 </button>
                 <button
                   type="submit"
-                  className="px-8 py-3 bg-[#aa3bff] text-white font-medium rounded-xl hover:bg-[#902be6] transition-colors"
+                  className="px-8 py-3 bg-primary text-white font-medium rounded-xl hover:bg-primary-hover transition-colors"
                 >
                   Proceed to Payment
                 </button>

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-// Product API Schema
+
 export const productSchema = z.object({
   id: z.number(),
   title: z.string(),
@@ -29,19 +29,19 @@ export const productListResponseSchema = z.object({
 export type Product = z.infer<typeof productSchema>;
 export type ProductListResponse = z.infer<typeof productListResponseSchema>;
 
-// Cart Item Interface
+
 export interface CartItem extends Product {
   quantity: number;
 }
 
-// Shipping Form Schema
+
 export const shippingFormSchema = z.object({
-  fullName: z.string().min(1, 'Full name is required'),
-  email: z.string().email('Email must be valid'),
-  phoneNumber: z.string().min(1, 'Phone number is required'),
-  address: z.string().min(1, 'Address is required'),
-  city: z.string().min(1, 'City is required'),
-  postalCode: z.string().min(1, 'Postal code is required'),
+  fullName: z.string().min(2, 'Full name must be at least 2 characters'),
+  email: z.string().email('Please enter a valid email address'),
+  phoneNumber: z.string().regex(/^\d{10}$/, 'Phone number must be exactly 10 digits'),
+  address: z.string().min(5, 'Address must be at least 5 characters'),
+  city: z.string().min(2, 'City must be at least 2 characters'),
+  postalCode: z.string().regex(/^\d{6}$/, 'Postal code must be exactly 6 digits'),
 });
 
 export type ShippingFormValues = z.infer<typeof shippingFormSchema>;
