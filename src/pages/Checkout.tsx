@@ -3,7 +3,6 @@ import { useCartStore } from '../store/cartStore';
 import { useNavigate, Link } from 'react-router-dom';
 import { shippingFormSchema, type ShippingFormValues } from '../types';
 import { Check, ChevronLeft, CreditCard, MapPin, ShoppingBag } from 'lucide-react';
-import { z } from 'zod';
 import { useFormik } from 'formik';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 import { toast } from 'react-toastify';
