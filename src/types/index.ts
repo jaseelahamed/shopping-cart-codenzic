@@ -13,6 +13,10 @@ export const productSchema = z.object({
   category: z.string(),
   thumbnail: z.string(),
   images: z.array(z.string()).optional(),
+  reviews: z.array(z.any()).optional(),
+  availabilityStatus: z.string().optional(),
+  shippingInformation: z.string().optional(),
+  warrantyInformation: z.string().optional(),
 });
 
 export const productListResponseSchema = z.object({

@@ -1,10 +1,13 @@
 import { useParams, Link } from 'react-router-dom';
+import { useState } from 'react';
 import { useProduct } from '../hooks/useProducts';
 import { useCartStore } from '../store/cartStore';
 import { Star, ArrowLeft, Plus, Minus, ShoppingCart, Truck, ShieldCheck } from 'lucide-react';
+import { toast } from 'react-toastify';
 
 const ProductDetails = () => {
   const { id } = useParams<{ id: string }>();
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
   const { data: product, isLoading, isError } = useProduct(id);
   const { addItem, updateQuantity, removeItem, items } = useCartStore();
 
@@ -32,6 +35,7 @@ const ProductDetails = () => {
   const handleIncrement = () => {
     if (quantity === 0) {
       addItem(product);
+      toast.success('Added to cart!');
     } else if (!isAtMaxLimit) {
       updateQuantity(product.id, quantity + 1);
     }
@@ -63,15 +67,19 @@ const ProductDetails = () => {
               {discountPercent}% OFF
             </span>
             <img 
-              src={product.images?.[0] || product.thumbnail} 
+              src={product.images?.[activeImageIndex] || product.thumbnail} 
               alt={product.title}
-              className="w-full h-full object-contain"
+              className="w-full h-full object-contain transition-opacity duration-300"
             />
           </div>
           {product.images && product.images.length > 1 && (
             <div className="flex gap-4 overflow-x-auto pb-2">
               {product.images.map((img, i) => (
-                <div key={i} className="w-20 h-20 flex-shrink-0 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-2 cursor-pointer hover:border-primary dark:hover:border-primary">
+                <div 
+                  key={i} 
+                  onClick={() => setActiveImageIndex(i)}
+                  className={`w-20 h-20 flex-shrink-0 rounded-lg border bg-white dark:bg-slate-900 p-2 cursor-pointer transition-colors ${activeImageIndex === i ? 'border-primary border-2 shadow-sm' : 'border-slate-200 dark:border-slate-700 hover:border-primary dark:hover:border-primary'}`}
+                >
                   <img src={img} alt="" className="w-full h-full object-contain mix-blend-multiply dark:mix-blend-normal" />
                 </div>
               ))}
@@ -79,7 +87,7 @@ const ProductDetails = () => {
           )}
         </div>
 
-        {/* Details */}
+
         <div className="w-full md:w-1/2 flex flex-col">
           <div className="mb-2">
             <span className="text-sm font-semibold text-primary uppercase tracking-wider">{product.brand || product.category}</span>
@@ -92,11 +100,11 @@ const ProductDetails = () => {
               <span className="text-sm font-bold text-amber-700 dark:text-amber-400">{product.rating.toFixed(1)}</span>
             </div>
             <span className="text-sm text-slate-500 dark:text-slate-400">
-              ({product.reviews?.length || 0} reviews)
+              ({product?.reviews?.length || 0} reviews)
             </span>
             <span className="text-slate-300 dark:text-slate-600">•</span>
             <span className="text-sm font-medium text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/30 px-2 py-1 rounded-md">
-              {product.availabilityStatus || 'In Stock'}
+              {product?.availabilityStatus || 'In Stock'}
             </span>
           </div>
 

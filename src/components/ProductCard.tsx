@@ -2,6 +2,7 @@ import { Plus, Minus, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import type { Product } from '../types';
 import { useCartStore } from '../store/cartStore';
+import { toast } from 'react-toastify';
 
 interface ProductCardProps {
   product: Product;
@@ -16,6 +17,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const handleIncrement = () => {
     if (quantity === 0) {
       addItem(product);
+      toast.success('Added to cart!');
     } else if (!isAtMaxLimit) {
       updateQuantity(product.id, quantity + 1);
     }
@@ -43,7 +45,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           <img
             src={product.thumbnail}
             alt={product.title}
-            className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-full bg-white  dark:bg-slate-800 object-contain p-2 group-hover:scale-105 transition-transform duration-300"
             loading="lazy"
           />
         </div>

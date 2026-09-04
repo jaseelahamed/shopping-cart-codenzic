@@ -102,8 +102,8 @@ const Navbar = ({ onCartClick }: NavbarProps) => {
                         }}
                         className="flex items-center gap-3 p-3 rounded-lg border border-slate-100 dark:border-slate-700 hover:border-primary/30 dark:hover:border-primary/50 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group"
                       >
-                        <div className="w-12 h-12 bg-white rounded flex items-center justify-center overflow-hidden flex-shrink-0">
-                          <img src={product.thumbnail} alt={product.title} className="w-full h-full object-contain mix-blend-multiply" />
+                        <div className="w-12 h-12 bg-white  rounded flex items-center justify-center overflow-hidden flex-shrink-0">
+                          <img src={product.thumbnail} alt={product.title} className="w-full h-full  bg-white  dark:bg-slate-800 object-contain mix-blend-multiply" />
                         </div>
                         <span className="text-sm font-medium text-slate-700 dark:text-slate-200 group-hover:text-primary dark:group-hover:text-primary-light line-clamp-2">{product.title}</span>
                       </Link>

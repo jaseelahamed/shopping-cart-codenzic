@@ -6,6 +6,7 @@ import { Check, ChevronLeft, CreditCard, MapPin, ShoppingBag } from 'lucide-reac
 import { z } from 'zod';
 import { useFormik } from 'formik';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
+import { toast } from 'react-toastify';
 
 const Checkout = () => {
   const [step, setStep] = useState<1 | 2 | 3>(1);
@@ -44,7 +45,7 @@ const Checkout = () => {
 
   const handlePlaceOrder = () => {
 
-    alert('Order placed successfully! Thank you for your purchase.');
+    toast.success('Order placed successfully! Thank you for your purchase.');
     clearCart();
     navigate('/');
   };
