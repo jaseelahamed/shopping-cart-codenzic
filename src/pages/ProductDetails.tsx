@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 const ProductDetails = () => {
   const { id } = useParams<{ id: string }>();
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [activeTab, setActiveTab] = useState<'details' | 'reviews' | 'shipping'>('details');
   const { data: product, isLoading, isError } = useProduct(id);
   const { addItem, updateQuantity, removeItem, items } = useCartStore();
 
@@ -161,6 +162,202 @@ const ProductDetails = () => {
             )}
           </div>
         </div>
+      </div>
+
+      {/* Tabs Navigation */}
+      <div className="mt-12 border-b border-slate-200 dark:border-slate-700">
+        <div className="flex gap-8">
+          <button 
+            onClick={() => setActiveTab('details')}
+            className={`pb-4 font-medium transition-colors border-b-2 ${activeTab === 'details' ? 'border-primary text-primary' : 'border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'}`}
+          >
+            Details
+          </button>
+          <button 
+            onClick={() => setActiveTab('reviews')}
+            className={`pb-4 font-medium transition-colors border-b-2 ${activeTab === 'reviews' ? 'border-primary text-primary' : 'border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'}`}
+          >
+            Reviews
+          </button>
+          <button 
+            onClick={() => setActiveTab('shipping')}
+            className={`pb-4 font-medium transition-colors border-b-2 ${activeTab === 'shipping' ? 'border-primary text-primary' : 'border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'}`}
+          >
+            Shipping and Returns
+          </button>
+        </div>
+      </div>
+
+      {/* Tab Content */}
+      <div className="pt-8">
+        {activeTab === 'details' && (
+          <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 md:p-10 shadow-sm border border-slate-100 dark:border-slate-700">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Specifications</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8">
+              {product.sku && (
+                <div className="flex justify-between border-b border-slate-100 dark:border-slate-700 pb-2">
+                  <span className="text-slate-500 dark:text-slate-400">SKU</span>
+                  <span className="font-medium text-slate-900 dark:text-slate-100">{product.sku}</span>
+                </div>
+              )}
+              {product.weight && (
+                <div className="flex justify-between border-b border-slate-100 dark:border-slate-700 pb-2">
+                  <span className="text-slate-500 dark:text-slate-400">Weight</span>
+                  <span className="font-medium text-slate-900 dark:text-slate-100">{product.weight}</span>
+                </div>
+              )}
+              {product.dimensions && (
+                <div className="flex justify-between border-b border-slate-100 dark:border-slate-700 pb-2">
+                  <span className="text-slate-500 dark:text-slate-400">Dimensions</span>
+                  <span className="font-medium text-slate-900 dark:text-slate-100">
+                    {product.dimensions.width} x {product.dimensions.height} x {product.dimensions.depth}
+                  </span>
+                </div>
+              )}
+              {product.minimumOrderQuantity && (
+                <div className="flex justify-between border-b border-slate-100 dark:border-slate-700 pb-2">
+                  <span className="text-slate-500 dark:text-slate-400">Minimum Order</span>
+                  <span className="font-medium text-slate-900 dark:text-slate-100">{product.minimumOrderQuantity} units</span>
+                </div>
+              )}
+              {product.tags && product.tags.length > 0 && (
+                <div className="flex justify-between border-b border-slate-100 dark:border-slate-700 pb-2">
+                  <span className="text-slate-500 dark:text-slate-400">Tags</span>
+                  <span className="font-medium text-slate-900 dark:text-slate-100 text-right">{product.tags.join(', ')}</span>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'shipping' && (
+          <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 md:p-10 shadow-sm border border-slate-100 dark:border-slate-700">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Shipping & Returns</h2>
+            <div className="space-y-6">
+              {product.shippingInformation && (
+                <div>
+                  <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Shipping Information</h3>
+                  <p className="text-slate-600 dark:text-slate-400">{product.shippingInformation}</p>
+                </div>
+              )}
+              {product.returnPolicy && (
+                <div>
+                  <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Return Policy</h3>
+                  <p className="text-slate-600 dark:text-slate-400">{product.returnPolicy}</p>
+                </div>
+              )}
+              {product.warrantyInformation && (
+                <div>
+                  <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Warranty</h3>
+                  <p className="text-slate-600 dark:text-slate-400">{product.warrantyInformation}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'reviews' && (
+          <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 md:p-10 shadow-sm border border-slate-100 dark:border-slate-700">
+            {/* Reviews Header */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 pb-10 border-b border-slate-200 dark:border-slate-700 mb-10">
+              
+              {/* Write Review Action */}
+              <div className="flex flex-col justify-center">
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">Share your experience</h3>
+                <p className="text-sm text-slate-500 dark:text-slate-400 mb-6 leading-relaxed">
+                  Your unique perspective, lessons, and moments of triumph can resonate deeply with others. Don't hesitate to contribute your story
+                </p>
+                <button 
+                  onClick={() => toast.info('Review feature coming soon!')}
+                  className="px-6 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-medium rounded-lg hover:bg-slate-800 dark:hover:bg-slate-100 transition-colors self-start"
+                >
+                  Write a review
+                </button>
+              </div>
+
+              {/* Average Rating */}
+              <div className="flex flex-col items-center justify-center">
+                <div className="flex items-end gap-2 mb-3">
+                  <span className="text-5xl font-bold text-slate-900 dark:text-white">{product.reviews?.length || 0}</span>
+                  <span className="text-2xl text-slate-500 dark:text-slate-400 font-medium mb-1">Reviews</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  {[...Array(5)].map((_, i) => (
+                    <Star 
+                      key={i} 
+                      size={20} 
+                      className={i < Math.round(product.rating) ? "fill-primary text-primary" : "fill-transparent text-slate-300 dark:text-slate-600"} 
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Star Progress Bars */}
+              <div className="flex flex-col justify-center space-y-2">
+                {[5, 4, 3, 2, 1].map((star) => {
+                  const count = product.reviews ? product.reviews.filter(r => Math.round(r.rating) === star).length : 0;
+                  const total = product.reviews?.length || 1;
+                  const percentage = product.reviews && product.reviews.length > 0 ? Math.round((count / total) * 100) : 0;
+                  
+                  return (
+                    <div key={star} className="flex items-center gap-3">
+                      <span className="w-4 text-sm font-medium text-slate-700 dark:text-slate-300">{star}</span>
+                      <Star size={12} className="fill-primary text-primary" />
+                      <div className="flex-1 h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                        <div 
+                          className="h-full bg-primary rounded-full transition-all duration-1000"
+                          style={{ width: `${percentage}%` }}
+                        />
+                      </div>
+                      <span className="w-10 text-right text-sm text-slate-500 dark:text-slate-400">{percentage}%</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Individual Reviews List */}
+            <div className="space-y-8">
+              {product.reviews?.map((review, idx) => (
+                <div key={idx} className="pb-8 border-b border-slate-100 dark:border-slate-700 last:border-0 last:pb-0">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden flex-shrink-0">
+                        <img src={`https://api.dicebear.com/7.x/notionists/svg?seed=${review.reviewerName}`} alt={review.reviewerName} className="w-full h-full object-cover" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-slate-900 dark:text-white">{review.reviewerName}</h4>
+                        <span className="text-sm text-slate-500 dark:text-slate-400">
+                          {new Date(review.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="flex">
+                        {[...Array(5)].map((_, i) => (
+                          <Star 
+                            key={i} 
+                            size={14} 
+                            className={i < review.rating ? "fill-primary text-primary" : "fill-transparent text-slate-300 dark:text-slate-600"} 
+                          />
+                        ))}
+                      </div>
+                      <span className="font-bold text-slate-900 dark:text-white ml-1">{review.rating}</span>
+                    </div>
+                  </div>
+                  <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+                    {review.comment}
+                  </p>
+                </div>
+              ))}
+              {(!product.reviews || product.reviews.length === 0) && (
+                <div className="text-center py-10 text-slate-500">
+                  No reviews yet. Be the first to share your experience!
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

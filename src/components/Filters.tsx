@@ -10,6 +10,8 @@ interface FiltersProps {
   setMaxPrice: (price: number | "") => void;
   categories: string[];
   clearFilters: () => void;
+  isOpen?: boolean;
+  onClose?: () => void;
 }
 
 const Filters: React.FC<FiltersProps> = ({
@@ -20,14 +22,48 @@ const Filters: React.FC<FiltersProps> = ({
   maxPrice,
   setMaxPrice,
   categories,
-  clearFilters
+  clearFilters,
+  isOpen,
+  onClose
 }) => {
   return (
-    <aside className="w-full md:w-64 flex-shrink-0 space-y-6 bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 h-fit sticky top-6 self-start text-slate-900 dark:text-slate-100">
-      <div className="flex items-center gap-2 pb-4 border-b border-slate-100">
-        <SlidersHorizontal size={20} className="text-primary" />
-        <h2 className="font-semibold text-lg">Filters</h2>
-      </div>
+    <>
+      {/* Mobile overlay background */}
+      {isOpen && (
+        <div 
+          className="fixed inset-0 bg-slate-900/50 z-40 md:hidden transition-opacity" 
+          onClick={onClose}
+        />
+      )}
+
+      {/* Sidebar / Mobile Drawer */}
+      <aside className={`
+        ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
+        md:translate-x-0
+        fixed md:sticky top-0 md:top-6 left-0 
+        z-50 md:z-0
+        w-4/5 max-w-sm md:w-64 h-full md:h-fit 
+        overflow-y-auto md:overflow-visible
+        bg-white dark:bg-slate-800 
+        p-6 md:rounded-2xl shadow-xl md:shadow-sm 
+        border-r md:border border-slate-100 dark:border-slate-700
+        transition-transform duration-300 ease-in-out
+        flex-shrink-0 space-y-6 self-start text-slate-900 dark:text-slate-100
+      `}>
+        <div className="flex items-center justify-between gap-2 pb-4 border-b border-slate-100">
+          <div className="flex items-center gap-2">
+            <SlidersHorizontal size={20} className="text-primary" />
+            <h2 className="font-semibold text-lg">Filters</h2>
+          </div>
+          {onClose && (
+            <button 
+              onClick={onClose}
+              className="md:hidden p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full transition-colors"
+            >
+              <X size={20} className="text-slate-500" />
+            </button>
+          )}
+        </div>
       
       <div className="space-y-4">
         <div>
@@ -84,6 +120,7 @@ const Filters: React.FC<FiltersProps> = ({
         </button>
       </div>
     </aside>
+    </>
   );
 };
 

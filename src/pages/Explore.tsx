@@ -1,10 +1,12 @@
+import { useState } from 'react';
 import { useProducts, useProductFilters } from '../hooks/useProducts';
 import ProductCard from '../components/ProductCard';
 import ProductSkeleton from '../components/ProductSkeleton';
 import Filters from '../components/Filters';
-import { Search } from 'lucide-react';
+import { Search, SlidersHorizontal } from 'lucide-react';
 
 const Explore = () => {
+  const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
   const { data, isLoading, isError, error } = useProducts();
   
   const {
@@ -63,6 +65,8 @@ const Explore = () => {
         setMaxPrice={setMaxPrice}
         categories={categories}
         clearFilters={clearFilters}
+        isOpen={isMobileFiltersOpen}
+        onClose={() => setIsMobileFiltersOpen(false)}
       />
 
 
@@ -76,6 +80,13 @@ const Explore = () => {
           </div>
           
           <div className="flex items-center gap-2">
+            <button
+              onClick={() => setIsMobileFiltersOpen(true)}
+              className="md:hidden flex items-center gap-2 px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors"
+            >
+              <SlidersHorizontal size={16} />
+              Filters
+            </button>
             <label className="text-sm font-medium text-slate-600 hidden sm:block">Sort by:</label>
             <select
               value={sortBy}
